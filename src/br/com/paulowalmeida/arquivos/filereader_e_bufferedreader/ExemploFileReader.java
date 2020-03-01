@@ -1,4 +1,4 @@
-package br.com.paulowalmeida.arquivos.filereader_e_bufferreader;
+package br.com.paulowalmeida.arquivos.filereader_e_bufferedreader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
