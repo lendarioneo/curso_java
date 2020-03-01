@@ -1,7 +1,7 @@
-package view;
+package br.com.paulowalmeida.excecoes.reserva.view;
 
-import model.entidades.Reserva;
-import model.exceptions.EntidadesException;
+import br.com.paulowalmeida.excecoes.reserva.model.entidades.Reserva;
+import br.com.paulowalmeida.excecoes.reserva.model.exceptions.EntidadesException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

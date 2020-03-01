@@ -1,4 +1,4 @@
-package model.exceptions;
+package br.com.paulowalmeida.excecoes.reserva.model.exceptions;
 
 public class EntidadesException extends Exception {
     private static final long serialVersionUID = 1L;

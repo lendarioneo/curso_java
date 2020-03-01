@@ -1,6 +1,6 @@
-package model.entidades;
+package br.com.paulowalmeida.excecoes.reserva.model.entidades;
 
-import model.exceptions.EntidadesException;
+import br.com.paulowalmeida.excecoes.reserva.model.exceptions.EntidadesException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
