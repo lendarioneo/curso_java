@@ -16,11 +16,11 @@ public class ProdutoController {
     }
 
     public void salvarDadosListaProdutos(String arquivoEntrada) {
-        produtos = fileProduto.lerArquivo(diretorio, arquivoEntrada);
+        this.produtos = fileProduto.lerArquivo(this.diretorio, arquivoEntrada);
     }
 
     public void criarArquivoListaProdutos(String diretorioSaida, String nomeArquivo){
-        boolean sucesso = fileProduto.criarArquivo(this.diretorio, diretorioSaida ,nomeArquivo, produtos);
+        boolean sucesso = this.fileProduto.criarArquivo(this.diretorio, diretorioSaida ,nomeArquivo, this.produtos);
         if (sucesso){
             System.out.println("Arquivo criado com sucesso:");
             System.out.println("Localização: " + this.diretorio + diretorioSaida);
@@ -34,7 +34,7 @@ public class ProdutoController {
     @Override
     public String toString() {
         String informacao = "";
-        for (Produto produto : produtos) {
+        for (Produto produto : this.produtos) {
             informacao += produto.toString();
         }
         return informacao;
