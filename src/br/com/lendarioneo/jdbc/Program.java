@@ -1,4 +1,7 @@
-package br.com.lendarioneo.jdbc.model.entities;
+package br.com.lendarioneo.jdbc;
+
+import br.com.lendarioneo.jdbc.model.entities.Department;
+import br.com.lendarioneo.jdbc.model.entities.Seller;
 
 import java.util.Date;
 
