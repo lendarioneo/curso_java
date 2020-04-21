@@ -6,10 +6,7 @@ import br.com.lendarioneo.jdbc.model.dao.SellerDao;
 import br.com.lendarioneo.jdbc.model.entities.Department;
 import br.com.lendarioneo.jdbc.model.entities.Seller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +21,50 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     @Override
-    public void insert(Seller seller) {
+    public Seller insert(Seller seller) {
+        String sql =
+                "INSERT INTO seller " +
+                "(Name, Email, BirthDate, BaseSalary, DepartmentId) " +
+                "VALUES (?, ?, ?, ?, ?);";
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, seller.getName());
+            preparedStatement.setString(2, seller.getEmail());
+            preparedStatement.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
+            preparedStatement.setDouble(4, seller.getBaseSalary());
+            preparedStatement.setInt(5, seller.getDepartment().getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0){
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()){
+                    int id = resultSet.getInt(1);
+                    seller.setId(id);
+                    return seller;
+                }
+                DB.closeResultSet(resultSet);
+            }
+            else {
+                throw new DBException("Error inesperado! Nenhuma linha foi afetada!");
+            }
+        }
+
+        catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatement(preparedStatement);
+        }
+        return null;
     }
 
     @Override
-    public void update(Seller seller) {
-
+    public Seller update(Seller seller) {
+        return null;
     }
 
     @Override
@@ -146,8 +180,8 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     @Override
-    public void deleteById(int index) {
-
+    public Seller deleteById(int index) {
+        return null;
     }
 
     private Seller instantiateSeller(ResultSet resultSet, Department department) throws SQLException {
