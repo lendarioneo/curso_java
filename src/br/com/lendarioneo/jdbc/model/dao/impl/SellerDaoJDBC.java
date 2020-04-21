@@ -21,7 +21,7 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     @Override
-    public Seller insert(Seller seller) {
+    public void insert(Seller seller) {
         String sql =
                 "INSERT INTO seller " +
                 "(Name, Email, BirthDate, BaseSalary, DepartmentId) " +
@@ -43,7 +43,6 @@ public class SellerDaoJDBC implements SellerDao {
                 if (resultSet.next()){
                     int id = resultSet.getInt(1);
                     seller.setId(id);
-                    return seller;
                 }
                 DB.closeResultSet(resultSet);
             }
@@ -59,17 +58,40 @@ public class SellerDaoJDBC implements SellerDao {
         finally {
             DB.closeStatement(preparedStatement);
         }
-        return null;
     }
 
     @Override
-    public Seller update(Seller seller) {
-        return null;
+    public void update(Seller seller) {
+        String sql =
+                "UPDATE seller " +
+                "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? " +
+                "WHERE Id = ?;";
+
+        PreparedStatement preparedStatement = null;
+        try{
+            preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, seller.getName());
+            preparedStatement.setString(2, seller.getEmail());
+            preparedStatement.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
+            preparedStatement.setDouble(4, seller.getBaseSalary());
+            preparedStatement.setInt(5, seller.getDepartment().getId());
+            preparedStatement.setInt(6, seller.getId());
+            preparedStatement.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            throw new DBException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatement(preparedStatement);
+        }
     }
 
     @Override
     public Seller findById(int id) {
-        String query = "SELECT seller.*, department.Name as DepName " +
+        String query =
+                "SELECT seller.*, department.Name as DepName " +
                 "FROM seller " +
                 "INNER JOIN department " +
                 "ON seller.DepartmentId = department.Id " +
@@ -180,8 +202,9 @@ public class SellerDaoJDBC implements SellerDao {
     }
 
     @Override
-    public Seller deleteById(int index) {
-        return null;
+    public void deleteById(int index) {
+        String sql = "DELETE * FROM seller WHERE id = ?";
+        PreparedStatement preparedStatement = null;
     }
 
     private Seller instantiateSeller(ResultSet resultSet, Department department) throws SQLException {

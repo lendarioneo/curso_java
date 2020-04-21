@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface SellerDao {
 
-    Seller insert(Seller seller);
+    void insert(Seller seller);
 
-    Seller update(Seller seller);
+    void update(Seller seller);
 
     Seller findById(int id);
 
@@ -16,5 +16,5 @@ public interface SellerDao {
 
     List<Seller> findAll();
 
-    Seller deleteById(int id);
+    void deleteById(int id);
 }

@@ -29,8 +29,15 @@ public class Program {
         //}
 
         /*Teste do Insert*/
-        Seller seller = new Seller(null, "Greg","greg@gmail.com", new Date(), 4.000, department);
-        sellerDao.insert(seller);
-        System.out.println("Inserido! Novo Id é : " + seller.getId());
+        //Seller seller = new Seller(null, "Greg","greg@gmail.com", new Date(), 4.000, department);
+        //sellerDao.insert(seller);
+        //System.out.println("Inserido! Novo Id é : " + seller.getId());
+
+        /*Teste do update*/
+        Seller seller = sellerDao.findById(1);
+        System.out.println("Funcionario pesquisado: " + seller);
+        seller.setName("Martha Wayne");
+        sellerDao.update(seller);
+        System.out.println("Funcionario atualizado: " + seller);
     }
 }
