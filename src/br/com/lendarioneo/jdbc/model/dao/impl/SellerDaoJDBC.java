@@ -203,8 +203,20 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void deleteById(int index) {
-        String sql = "DELETE * FROM seller WHERE id = ?";
+        String sql = "DELETE FROM seller WHERE id = ?";
         PreparedStatement preparedStatement = null;
+        try{
+            preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, index);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+
+        finally {
+            DB.closeStatement(preparedStatement);
+        }
     }
 
     private Seller instantiateSeller(ResultSet resultSet, Department department) throws SQLException {
